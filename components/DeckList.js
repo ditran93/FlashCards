@@ -3,18 +3,16 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import {connect} from 'react-redux'
 import CreateDeck from './CreateDeck';
 import DeckDetails from './DeckDetails'
-
-function CreateDeckBtn ({ onPress }) {
-  return (
-    <TouchableOpacity style={styles.submitBtn} onPress={onPress}>
-      <Text style={styles.submitBtnText}>Create Deck</Text>
-    </TouchableOpacity>
-  )
-}
+import {getDecks, clear} from '../utils/api'
+import {loadDecks} from '../actions'
 
 class DeckList extends Component {
+  componentDidMount() {
+    getDecks().then(result => this.props.loadDecks(result))
+  }
   render() {
     const { decks, navigation } = this.props
+    console.log('decks: ', decks)
     const deckArray = Object.keys(decks)
     return (
       <View>
@@ -29,13 +27,17 @@ class DeckList extends Component {
                 {key: key}
               )}>
               <Text style={styles.title}>{title}</Text>
-              <Text style={styles.card}>{numberOfCards} cards</Text>
+              <Text style={styles.card}>{numberOfCards} card(s)</Text>
             </TouchableOpacity>
           )})
         }
-        <CreateDeckBtn onPress={()=> navigation.navigate(
+        <TouchableOpacity 
+          style={styles.submitBtn} 
+          onPress={()=> navigation.navigate(
           'CreateDeck',
-        )}/>
+        )}>
+          <Text style={styles.submitBtnText}>Create Deck</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -84,4 +86,4 @@ function mapStateToProps(decks) {
     decks: decks
   }
 }
-export default connect(mapStateToProps)(DeckList)
+export default connect(mapStateToProps, {loadDecks})(DeckList)

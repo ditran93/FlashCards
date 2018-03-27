@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, 
+  Text, 
+  View, 
+  TouchableOpacity, 
+  TextInput, 
+  KeyboardAvoidingView,
+  Alert } from 'react-native'
 import { addQuestionToDeck } from "../utils/api";
 import { addDeck } from '../actions'
 import { connect } from 'react-redux'
@@ -22,10 +28,18 @@ class AddQuestion extends Component {
   handleOnPress = () => {
     const { question, answer } = this.state
     const { deck } = this.props.navigation.state.params
-    addQuestionToDeck(deck, question, answer).then(result => {
-      console.log('result: ', result)
-      return this.props.addDeck(result)})
-    this.goBack()
+    if(!question || !answer) {
+      return Alert.alert('Please type in both question and answer');
+    } else {
+      addQuestionToDeck(deck, question, answer)
+      const card = {
+        question: question,
+        answer: answer
+      }
+      deck['questions'].concat(card)
+      this.props.addDeck(deck)
+      this.goBack()
+    }
   }
   goBack() {
     const {navigation} = this.props

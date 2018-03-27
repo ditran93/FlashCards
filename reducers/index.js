@@ -1,5 +1,6 @@
 import {
-  ADD_DECK
+  ADD_DECK,
+  LOAD_DECKS
 } from '../actions'
 
 function decks(state = {}, action) {
@@ -8,6 +9,11 @@ function decks(state = {}, action) {
       return {
         ...state,
         [action.deck.key]: action.deck
+      }
+    case LOAD_DECKS:
+      return {
+        ...state,
+        ...action.decks
       }
     default:
       return state

@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Alert} from 'react-native'
-import { createDeck } from '../utils/api'
+import { createDeck, getDeck } from '../utils/api'
 import { generateId } from '../utils/helpers'
 import { addDeck } from '../actions'
 import { connect } from 'react-redux'
@@ -28,10 +28,9 @@ class CreateDeck extends Component {
       return Alert.alert('Please type in a title for your new deck');
     }
     
-    createDeck({key, title}).then(deck => {
-      this.props.addDeck(deck),
-      this.goBack()
-    })
+    createDeck({key, title})
+    getDeck(key).then(deck => this.props.addDeck(deck))
+    this.goBack()
   }
   goBack() {
     const {navigation} = this.props;

@@ -16,7 +16,7 @@ class DeckDetails extends Component {
       <View style={styles.container}>
         <View style={{marginBottom: 100}}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.card}>{numberOfCards} cards</Text>
+          <Text style={styles.card}>{numberOfCards} card(s)</Text>
         </View>
         <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AddQuestion', {deck: deck})}>
           <Text style={styles.btnText}>Add Card</Text>
