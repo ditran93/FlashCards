@@ -19,7 +19,7 @@ export function getDeck(key) {
   return getDecks().then(decks => {
     return Object.keys(decks).length === 0
       ? {}
-      : decks[key];
+      : decks[key]
   })
 }
 
@@ -27,6 +27,18 @@ export function getDecks() {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(data => {
     return data === null
       ? {}
-      : JSON.parse(data);
-  });
+      : JSON.parse(data)
+  })
+}
+
+export function addQuestionToDeck(deck, question, answer) {
+
+  const {key, title} = deck
+  let { questions } = deck
+  const card = {
+    question: question,
+    answer: answer 
+  }
+  questions.push(card)
+  return createDeck(key, title, questions)
 }

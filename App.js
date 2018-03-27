@@ -8,6 +8,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from './reducers'
 import DeckDetails from './components/DeckDetails'
+import AddQuestion from './components/AddQuestion'
 
 function CustomStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -45,6 +46,16 @@ const Stack = StackNavigator({
     navigationOptions: {
       headerTintColor: 'white',
       headerTitle: 'Deck Details',
+      headerStyle: {
+        backgroundColor: 'green'
+      }
+    }
+  },
+  AddQuestion: {
+    screen: AddQuestion,
+    navigationOptions: {
+      headerTintColor: 'white',
+      headerTitle: 'Add Question',
       headerStyle: {
         backgroundColor: 'green'
       }
