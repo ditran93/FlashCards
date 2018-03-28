@@ -7,8 +7,9 @@ import {getDecks, clear} from '../utils/api'
 import {loadDecks} from '../actions'
 
 class DeckList extends Component {
-  componentDidMount() {
-    getDecks().then(result => this.props.loadDecks(result))
+  componentDidMount(){
+    getDecks().then(result => {
+      return this.props.loadDecks(result)})
   }
   render() {
     const { decks, navigation } = this.props
@@ -16,10 +17,10 @@ class DeckList extends Component {
     const deckArray = Object.keys(decks)
     return (
       <View>
-        {deckArray.map((deck) => {
-          const title = decks[deck]['title']
-          const numberOfCards = decks[deck]['questions'].length
-          const key = decks[deck]['key']
+        {deckArray.map((key) => {
+          const deck = decks[key]
+          const title = deck['title']
+          const numberOfCards = deck['questions'].length
 
           return(
             <TouchableOpacity key={key} style={styles.deck} onPress={() => navigation.navigate(

@@ -31,13 +31,9 @@ class AddQuestion extends Component {
     if(!question || !answer) {
       return Alert.alert('Please type in both question and answer');
     } else {
-      addQuestionToDeck(deck, question, answer)
-      const card = {
-        question: question,
-        answer: answer
-      }
-      deck['questions'].concat(card)
-      this.props.addDeck(deck)
+      addQuestionToDeck(deck, question, answer).then(data =>{
+        this.props.addDeck(data)
+      })
       this.goBack()
     }
   }
@@ -84,7 +80,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 44,
     padding: 8,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'black',
     margin: 30
   },

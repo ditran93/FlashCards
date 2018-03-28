@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import reducers from './reducers'
 import DeckDetails from './components/DeckDetails'
 import AddQuestion from './components/AddQuestion'
+import TakeQuiz from './components/TakeQuiz'
 
 function CustomStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -60,7 +61,17 @@ const Stack = StackNavigator({
         backgroundColor: 'green'
       }
     }
-  }
+  },
+  TakeQuiz: {
+    screen: TakeQuiz,
+    navigationOptions: {
+      headerTintColor: 'white',
+      headerTitle: 'Take Quiz',
+      headerStyle: {
+        backgroundColor: 'green'
+      }
+    }
+  },
 })
 
 

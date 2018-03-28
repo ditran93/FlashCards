@@ -26,15 +26,17 @@ class CreateDeck extends Component {
     const title = this.state.title
     if(!title) {
       return Alert.alert('Please type in a title for your new deck');
+    } else {
+      createDeck(key, title)
+      const newDeck = {
+        key: key,
+        title: title,
+        questions: []
+      }
+      this.props.addDeck(newDeck)
+      const {navigation} = this.props;
+      navigation.goBack()
     }
-    
-    createDeck({key, title})
-    getDeck(key).then(deck => this.props.addDeck(deck))
-    this.goBack()
-  }
-  goBack() {
-    const {navigation} = this.props;
-    navigation.goBack()
   }
   render() {
     const { title } = this.state

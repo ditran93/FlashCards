@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import TakeQuiz from './TakeQuiz'
 
 
 class DeckDetails extends Component {
@@ -8,7 +9,7 @@ class DeckDetails extends Component {
     const { key } = this.props.navigation.state.params
     const{ navigation } = this.props
     const { decks } = this.props
-    console.log('decks: ', decks)
+    console.log('decks from DeckDetail: ', decks)
     const deck = decks[key]
     const title = deck['title']
     const numberOfCards = deck['questions'].length
@@ -21,7 +22,7 @@ class DeckDetails extends Component {
         <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AddQuestion', {deck: deck})}>
           <Text style={styles.btnText}>Add Card</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('TakeQuiz')}>
           <Text style={styles.btnText}>Take Quiz</Text>
         </TouchableOpacity>
       </View>

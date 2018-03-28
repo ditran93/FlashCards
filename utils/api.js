@@ -1,24 +1,10 @@
 import { AsyncStorage } from 'react-native'
+import AddQuestion from '../components/AddQuestion';
 
 const DECKS_STORAGE_KEY = 'FlashCards:decks'
 
-export function createDeck({ key, title, questions=[] }) {
-  const data = JSON.stringify({
-    [key]: {
-      key: key,
-      title: title,
-      questions: questions
-    }
-  })
-  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, data)
-}
-
-export function getDeck(key) {
-  return getDecks().then(decks => {
-    return Object.keys(decks).length === 0
-      ? {}
-      : decks[key]
-  })
+export function clear() {
+  return AsyncStorage.clear()
 }
 
 export function getDecks() {
@@ -29,27 +15,35 @@ export function getDecks() {
   })
 }
 
-export function addQuestionToDeck(deck, question, answer) {
-
-  const {key, title} = deck
-  let { questions } = deck
-  const card = {
-    question: question,
-    answer: answer 
-  }
-  questions.push(card)
-  deck = {
-    ...deck,
-    questions
-  }
+export function createDeck(key, title, questions=[]) {
   const data = JSON.stringify({
-    key: {
-      ...deck
-    }
+    [key]: {
+      key: key,
+      title: title,
+      questions: questions
+    } 
   })
-  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, data)
+ return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, data)
+  .then(() => {
+    return getDeck(key)
+  })
 }
 
-export function clear() {
-  return AsyncStorage.clear()
+export function addQuestionToDeck(deck, question, answer) {
+  const card = {
+    question: question,
+    answer: answer
+  }
+  const {questions} = deck
+  questions.push(card)
+  const { key, title } = deck
+  return createDeck(key, title, questions)
+}
+
+export function getDeck(key) {
+  return getDecks().then(decks => {
+    return Object.keys(decks).length === 0
+      ? {}
+      : decks[key]
+  })
 }
