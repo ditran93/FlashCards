@@ -10,6 +10,7 @@ import reducers from './reducers'
 import DeckDetails from './components/DeckDetails'
 import AddQuestion from './components/AddQuestion'
 import TakeQuiz from './components/TakeQuiz'
+import { setLocalNotification } from './utils/helpers'
 
 function CustomStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -44,38 +45,20 @@ const Stack = StackNavigator({
   },
   DeckDetails: {
     screen: DeckDetails,
-    navigationOptions: {
-      headerTintColor: 'white',
-      headerTitle: 'Deck Details',
-      headerStyle: {
-        backgroundColor: 'green'
-      }
-    }
   },
   AddQuestion: {
     screen: AddQuestion,
-    navigationOptions: {
-      headerTintColor: 'white',
-      headerTitle: 'Add Question',
-      headerStyle: {
-        backgroundColor: 'green'
-      }
-    }
   },
   TakeQuiz: {
     screen: TakeQuiz,
-    navigationOptions: {
-      headerTintColor: 'white',
-      headerTitle: 'Take Quiz',
-      headerStyle: {
-        backgroundColor: 'green'
-      }
-    }
   },
 })
 
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={store}>

@@ -1,21 +1,25 @@
 import {
   ADD_DECK,
-  LOAD_DECKS
+  LOAD_DECKS,
+  DELETE_DECK
 } from '../actions'
 
 function decks(state = {}, action) {
   switch(action.type) {
-    
     case ADD_DECK:
       return {
         ...state,
         [action.deck.key]: action.deck
       }
     case LOAD_DECKS:
-    console.log(action)
       return {
         ...state,
         ...action.decks
+      }
+    case DELETE_DECK:
+      return {
+        ...state,
+        [action.deck.key]: null
       }
     default:
       return state

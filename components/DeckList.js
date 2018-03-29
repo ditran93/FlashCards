@@ -1,50 +1,61 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import {connect} from 'react-redux'
 import CreateDeck from './CreateDeck';
 import DeckDetails from './DeckDetails'
 import {getDecks, clear} from '../utils/api'
 import {loadDecks} from '../actions'
+import { objectToArray } from '../utils/helpers'
+
+function ListItem (item, navigation) {
+  const deck = {...item.item}
+  const title = deck['title']
+  const numberOfCards = deck['questions'].length
+  return(
+    <TouchableOpacity key={deck['key']} style={styles.deck} onPress={() => navigation.navigate(
+        'DeckDetails',
+        {deck: deck},
+      )}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.card}>{numberOfCards} card(s)</Text>
+    </TouchableOpacity>
+  )
+}
+
+
 
 class DeckList extends Component {
   componentDidMount(){
     getDecks().then(result => {
       return this.props.loadDecks(result)})
   }
+  shouldComponentUpdate (nextProps) {
+    const {decks} = this.props
+    console.log('decks', decks)
+    return nextProps.decks !== null
+  }
   render() {
     const { decks, navigation } = this.props
-    console.log('decks: ', decks)
-    const deckArray = Object.keys(decks)
+    const decksArray = objectToArray(decks)
+    console.log('decks from render', decks)
     return (
-      <View>
-        {deckArray.map((key) => {
-          const deck = decks[key]
-          const title = deck['title']
-          const numberOfCards = deck['questions'].length
-
-          return(
-            <TouchableOpacity key={key} style={styles.deck} onPress={() => navigation.navigate(
-                'DeckDetails',
-                {key: key}
-              )}>
-              <Text style={styles.title}>{title}</Text>
-              <Text style={styles.card}>{numberOfCards} card(s)</Text>
-            </TouchableOpacity>
-          )})
-        }
+      <View style={styles.container}>
         <TouchableOpacity 
           style={styles.submitBtn} 
           onPress={()=> navigation.navigate(
           'CreateDeck',
-        )}>
+          )}>
           <Text style={styles.submitBtnText}>Create Deck</Text>
         </TouchableOpacity>
+        <FlatList
+          data={decksArray}
+          renderItem={(item) => ListItem(item, navigation)}
+          keyExtractor={(item, index) => index}
+        />
       </View>
     )
   }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -73,12 +84,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   submitBtn: {
-    backgroundColor: 'green',
+    backgroundColor: 'blue',
     padding: 10,
-    borderRadius: 7,
     height: 45,
-    marginLeft: 40,
-    marginRight: 40
   }
 })
 

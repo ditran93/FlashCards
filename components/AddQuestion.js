@@ -15,6 +15,12 @@ class AddQuestion extends Component {
     question: '',
     answer: ''
   }
+  static navigationOptions = ({ navigation }) => {
+    const { deck } = navigation.state.params
+    return {
+      title: `${deck.title}`
+    }
+  }
   handleQuestionChange = (question) => {
     this.setState(() => ({
       question,

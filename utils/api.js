@@ -1,5 +1,4 @@
 import { AsyncStorage } from 'react-native'
-import AddQuestion from '../components/AddQuestion';
 
 const DECKS_STORAGE_KEY = 'FlashCards:decks'
 
@@ -45,5 +44,14 @@ export function getDeck(key) {
     return Object.keys(decks).length === 0
       ? {}
       : decks[key]
+  })
+}
+
+export function deleteDeckInStorage(deck) {
+  const key = deck.key
+  return getDecks().then(decks => {
+    decks[key] = undefined
+     delete decks[key]
+     return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
   })
 }
