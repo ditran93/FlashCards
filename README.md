@@ -38,7 +38,7 @@ This project was bootstrapped with [Create React Native App]
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
 
-Unable to start server
+## Unable to start server
 See https://git.io/v5vcn for more information, either install watchman or run the following snippet:
   sudo sysctl -w kern.maxfiles=5242880
   sudo sysctl -w kern.maxfilesperproc=524288
