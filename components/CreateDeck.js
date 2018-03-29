@@ -23,7 +23,9 @@ class CreateDeck extends Component {
   }
   submitDeck = () => {
     const key = generateId()
+    const { addDeck } = this.props
     const title = this.state.title
+    const {navigation} = this.props;
     if(!title) {
       return Alert.alert('Please type in a title for your new deck');
     } else {
@@ -33,8 +35,7 @@ class CreateDeck extends Component {
         title: title,
         questions: []
       }
-      this.props.addDeck(newDeck)
-      const {navigation} = this.props;
+      addDeck(newDeck)
       navigation.goBack()
     }
   }

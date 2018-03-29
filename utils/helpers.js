@@ -18,7 +18,8 @@ export function objectToArray(obj, key='key') {
     return [];
   }
   const arrayOfKeys = Object.keys(obj)
-  return arrayOfKeys.map(key => (obj[key]))
+  const resultArray =  arrayOfKeys.map(key => (obj[key]))
+  return resultArray.filter(element => element !== null)
 }
 
 function createNotification () {

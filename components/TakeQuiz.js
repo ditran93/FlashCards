@@ -18,37 +18,40 @@ class TakeQuiz extends Component {
     };
   }
   handleOnPressQA = () => {
-    if (this.state.showAnswer) {
+    const { showAnswer } = this.state
+    if (showAnswer) {
       this.setState({showAnswer: false})
     } else {
       this.setState({showAnswer: true})
     }
   }
   handleOnPressCorrect = () => {
+    const { currentQuestionIndex, correctAnswerCount } = this.state
     this.setState({
-      currentQuestionIndex: this.state.currentQuestionIndex + 1,
-      correctAnswerCount: this.state.correctAnswerCount + 1
+      currentQuestionIndex: currentQuestionIndex + 1,
+      correctAnswerCount: correctAnswerCount + 1
     })
   }
   handleOnPressInCorrect = () => {
+    const { currentQuestionIndex, incorrectAnswerCount } = this.state
     this.setState({
-      currentQuestionIndex: this.state.currentQuestionIndex + 1,
-      incorrectAnswerCount: this.state.incorrectAnswerCount + 1
+      currentQuestionIndex: currentQuestionIndex + 1,
+      incorrectAnswerCount: incorrectAnswerCount + 1
     })
   }
   renderContent() {
       const { deck } = this.props.navigation.state.params
       const totalQuestions = deck['questions'].length
-      const { currentQuestionIndex } = this.state
+      const { currentQuestionIndex, showAnswer } = this.state
       let question = deck.questions[currentQuestionIndex].question
       let answer = deck.questions[currentQuestionIndex].answer
       return (
         <View style={styles.container}>
-          <Text style={styles.questionIndexText}>{this.state.currentQuestionIndex + 1}/{totalQuestions}</Text>
+          <Text style={styles.questionIndexText}>{currentQuestionIndex + 1}/{totalQuestions}</Text>
           <View style={styles.content}>
             <Text style={styles.questionText}>{this.state.showAnswer ? answer : question}</Text>
             <TouchableOpacity onPress={this.handleOnPressQA}>
-              <Text style={styles.answerBtnText}>{this.state.showAnswer ? 'Question' : 'Answer' }</Text>
+              <Text style={styles.answerBtnText}>{showAnswer ? 'Question' : 'Answer' }</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.correctBtn} onPress={this.handleOnPressCorrect}>
               <Text style={styles.btnText}>Correct</Text>

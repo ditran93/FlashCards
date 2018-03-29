@@ -2,7 +2,7 @@ import {
   ADD_DECK,
   LOAD_DECKS,
   DELETE_DECK
-} from '../actions'
+} from '../actions/types'
 
 function decks(state = {}, action) {
   switch(action.type) {

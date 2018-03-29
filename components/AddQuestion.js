@@ -34,11 +34,12 @@ class AddQuestion extends Component {
   handleOnPress = () => {
     const { question, answer } = this.state
     const { deck } = this.props.navigation.state.params
+    const { addDeck } = this.props
     if(!question || !answer) {
       return Alert.alert('Please type in both question and answer');
     } else {
       addQuestionToDeck(deck, question, answer).then(data =>{
-        this.props.addDeck(data)
+        addDeck(data)
       })
       this.goBack()
     }

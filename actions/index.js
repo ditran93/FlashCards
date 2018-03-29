@@ -1,6 +1,8 @@
-export const ADD_DECK = 'ADD_DECK'
-export const LOAD_DECKS ='LOAD_DECKS'
-export const DELETE_DECK = 'DELETE_DECK'
+import {
+  ADD_DECK,
+  LOAD_DECKS,
+  DELETE_DECK
+} from './types'
 
 export function addDeck(deck) {
   return {

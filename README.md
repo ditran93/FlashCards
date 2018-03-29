@@ -12,7 +12,7 @@ Install all necessary modules to run the current project.
 
 ```bash
 $ git clone https://github.com/ditran93/FlashCards
-$ cd FlashCards-master
+$ cd FlashCards
 $ npm install
 ```
 

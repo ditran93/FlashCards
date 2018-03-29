@@ -26,18 +26,13 @@ function ListItem (item, navigation) {
 
 class DeckList extends Component {
   componentDidMount(){
+    const {loadDecks} = this.props
     getDecks().then(result => {
-      return this.props.loadDecks(result)})
-  }
-  shouldComponentUpdate (nextProps) {
-    const {decks} = this.props
-    console.log('decks', decks)
-    return nextProps.decks !== null
+      return loadDecks(result)})
   }
   render() {
     const { decks, navigation } = this.props
     const decksArray = objectToArray(decks)
-    console.log('decks from render', decks)
     return (
       <View style={styles.container}>
         <TouchableOpacity 
