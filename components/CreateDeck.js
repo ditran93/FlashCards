@@ -37,6 +37,7 @@ class CreateDeck extends Component {
       }
       addDeck(newDeck)
       navigation.goBack()
+      navigation.navigate('DeckDetails', {key: key, deck: newDeck})
     }
   }
   render() {

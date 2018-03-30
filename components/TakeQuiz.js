@@ -19,11 +19,7 @@ class TakeQuiz extends Component {
   }
   handleOnPressQA = () => {
     const { showAnswer } = this.state
-    if (showAnswer) {
-      this.setState({showAnswer: false})
-    } else {
-      this.setState({showAnswer: true})
-    }
+    this.setState({ showAnswer: !this.state.showAnswer })
   }
   handleOnPressCorrect = () => {
     const { currentQuestionIndex, correctAnswerCount } = this.state
@@ -37,6 +33,13 @@ class TakeQuiz extends Component {
     this.setState({
       currentQuestionIndex: currentQuestionIndex + 1,
       incorrectAnswerCount: incorrectAnswerCount + 1
+    })
+  }
+  handleRetakeQuiz () {
+    this.setState({
+      currentQuestionIndex: 0,
+      correctAnswerCount: 0,
+      incorrectAnswerCount: 0
     })
   }
   renderContent() {
@@ -67,11 +70,18 @@ class TakeQuiz extends Component {
       const { deck } = this.props.navigation.state.params
       const { correctAnswerCount, incorrectAnswerCount } = this.state
       const totalQuestions = deck['questions'].length
+      const { navigation } = this.props
       clearLocalNotification().then(setLocalNotification)
       return ( 
         <View style={styles.content}>
           <Text style={styles.questionText}>Congratulations! You finished the quiz.</Text>
           <Text style={styles.questionText}>You got {(correctAnswerCount*100/totalQuestions)}% correct</Text>
+          <TouchableOpacity style={styles.correctBtn} onPress={() => this.handleRetakeQuiz()}>
+              <Text style={styles.btnText}>Retake</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.correctBtn} onPress={() => navigation.goBack()}>
+              <Text style={styles.btnText}>Back To Deck</Text>
+          </TouchableOpacity>
         </View>
       )
     }

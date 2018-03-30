@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import TakeQuiz from './TakeQuiz'
 import { deleteDeckInStorage } from '../utils/api'
@@ -24,6 +24,13 @@ class DeckDetails extends Component {
     deleteDeckInStorage(deck).then(() => deleteDeck(deck))
     navigation.goBack()
   }
+  handleTakeQuiz(numberOfCards, navigation, deck) {
+    if(numberOfCards === 0) {
+      return Alert.alert('Please add cards before taking quiz');
+    } else {
+      navigation.navigate('TakeQuiz', {deck: deck})
+    }
+  }
 
   render() {
     const { key } = this.props.navigation.state.params.deck
@@ -41,7 +48,7 @@ class DeckDetails extends Component {
         <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AddQuestion', {deck: deck})}>
           <Text style={styles.btnText}>Add Card</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('TakeQuiz', {deck: deck})}>
+        <TouchableOpacity style={styles.btn} onPress={() => this.handleTakeQuiz(numberOfCards, navigation, deck)}>
           <Text style={styles.btnText}>Take Quiz</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btn} onPress={() => this.handleOnPressDelete()}>
